@@ -1,0 +1,53 @@
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 24px;
+}
+
+.summary-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.summary-card p {
+  margin: 12px 0 6px;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.summary-card h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.summary-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.total {
+  color: #2563eb;
+}
+
+.allowed {
+  color: #16a34a;
+}
+
+.blocked {
+  color: #f59e0b;
+}
+
+.anomaly {
+  color: #ef4444;
+}
+
+.anomaly-card {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(239, 68, 68, 0.06);
+}

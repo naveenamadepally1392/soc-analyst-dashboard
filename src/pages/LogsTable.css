@@ -1,0 +1,53 @@
+.logs-table-wrapper {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.logs-table th,
+.logs-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.logs-table th {
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 600;
+}
+
+.logs-table td {
+  color: #111827;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-badge.allowed {
+  background: #e6f7ee;
+  color: #137333;
+}
+
+.status-badge.blocked {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.status-badge.anomaly {
+  background: #fff4e5;
+  color: #b26a00;
+}

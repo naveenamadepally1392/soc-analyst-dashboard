@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { FiMoon, FiSun, FiUser, FiLogOut } from "react-icons/fi";
+import CardsPage from "./CradsPage";
+import TimeRangePage from "./TimeRangePage";
+import LogsTable from "./LogsTable";
+import { mockLogs } from "../data/logs";
 
 interface Props {
   username: string;
@@ -8,7 +12,9 @@ interface Props {
 
 export default function DashboardPage({ username, onLogout }: Props) {
   const [theme, setTheme] = useState<"light" | "dark">("light");
-
+    const [selectedRange, setSelectedRange] = useState<
+    "30m" | "1h" | "6h" | "12h" | "24h"
+    >("1h");
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "light" | "dark";
     if (saved) setTheme(saved);
@@ -47,15 +53,12 @@ export default function DashboardPage({ username, onLogout }: Props) {
           </button>
         </div>
       </header>
-       <div>
-        Time range selector comes here
-      </div>
-      <div>
-        Dashboart components comes here.....
-      </div>
-      <div>
-        Table with events and filters come here....
-      </div>
+        <TimeRangePage
+        selectedRange={selectedRange}
+        onRangeChange={setSelectedRange}
+        />
+        <CardsPage logs={mockLogs} />
+      <LogsTable logs={mockLogs} />
     </div>
   );
 }

@@ -1,78 +1,63 @@
 import { useState } from "react";
+import "./LoginPage.css";
 
 interface Props {
-  onLogin: () => void;
+  onLogin: (username: string) => void;
 }
-
 
 export default function LoginPage({ onLogin }: Props) {
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = () => {
-    if (username.trim() === '' || password.trim() === '') {
-      setError('Please enter username and password');
+    if (username.trim() === "" || password.trim() === "") {
+      setError("Please enter username and password");
       return;
     }
-    setError('');
+
+    setError("");
     setLoading(true);
+
     setTimeout(() => {
-      onLogin();
+      onLogin(username.trim());
     }, 800);
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2>SOC Event Investigator</h2>
-        <p style={{ color: "#6b7280" }}>
+    <div className="login-page">
+      <div className="login-card">
+        <h2 className="login-title">SOC Event Investigator</h2>
+        <p className="login-subtitle">
           Monitor and investigate security events
         </p>
-        <input placeholder="Username" style={styles.input} value={username} onChange={e => setUsername(e.target.value)} />
-        <input placeholder="Password" type="password" style={styles.input} value={password} onChange={e => setPassword(e.target.value)} />
-        {error && (
-          <div style={{ color: 'red', marginTop: 4, marginBottom: 4, fontSize: 14 }}>{error}</div>
-        )}
-        <button onClick={handleLogin} style={styles.button}>
+
+        <input
+          className="login-input"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
+        <input
+          className="login-input"
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {error && <div className="login-error">{error}</div>}
+
+        <button
+          className="login-button"
+          onClick={handleLogin}
+          disabled={loading}
+        >
           {loading ? "Signing in..." : "Sign In"}
         </button>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "#f5f7fb",
-  },
-  card: {
-    background: "#fff",
-    padding: "32px",
-    borderRadius: "12px",
-    width: "flexible",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
-    display: "flex",
-    flexDirection: "column" as const,
-    gap: "12px",
-  },
-  input: {
-    padding: "10px",
-    borderRadius: "8px",
-    border: "1px solid #e5e7eb",
-  },
-  button: {
-    marginTop: "10px",
-    padding: "10px",
-    borderRadius: "8px",
-    border: "none",
-    background: "#2563eb",
-    color: "white",
-    cursor: "pointer",
-  },
-};

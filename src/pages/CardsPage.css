@@ -1,53 +1,62 @@
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  padding: 24px;
+  gap: 12px;
+  padding: 20px 24px;
 }
 
 .summary-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.summary-card:hover {
+  border-color: var(--primary);
 }
 
 .summary-card p {
-  margin: 12px 0 6px;
-  font-size: 14px;
+  margin: 6px 0 2px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--text-light);
 }
 
 .summary-card h2 {
   margin: 0;
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 600;
   color: var(--text);
 }
 
 .summary-icon {
-  width: 36px;
-  height: 36px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
 }
 
+/* subtle accents */
 .total {
-  color: #2563eb;
+  color: var(--primary);
 }
 
 .allowed {
-  color: #16a34a;
+  color: #22c55e;
 }
 
 .blocked {
-  color: #f59e0b;
-}
-
-.anomaly {
   color: #ef4444;
 }
 
+.anomaly {
+  color: #f59e0b;
+}
+
 .anomaly-card {
-  border-color: rgba(239, 68, 68, 0.45);
-  background: rgba(239, 68, 68, 0.06);
+  border-color: var(--border);
+  background: var(--card);
 }

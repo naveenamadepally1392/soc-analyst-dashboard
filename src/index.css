@@ -1,22 +1,24 @@
-/* ---------------- BASE ---------------- */
 
 :root {
-  --bg: #f5f7fb;
-  --text: #111827;
-  --text-light: #6b7280;
-  --border: #e5e7eb;
+  --bg: #f6f8fb;
+  --text: #0f172a;
+  --text-light: #64748b;
+  --border: #e2e8f0;
   --card: #ffffff;
 
   --primary: #6366f1;
-  --button-bg: #f9fafb;
+  --button-bg: #f1f5f9;
+
+  --radius: 8px;
+  --spacing: 12px;
 }
 
 [data-theme="dark"] {
-  --bg: #0f172a;
-  --text: #f8fafc;
+  --bg: #0b1220;
+  --text: #e2e8f0;
   --text-light: #64748b;
   --border: #1e293b;
-  --card: #111827;
+  --card: #0f172a;
 
   --primary: #818cf8;
   --button-bg: #1e293b;
@@ -27,58 +29,67 @@ body {
   font-family: Inter, system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
+  font-size: 14px;
 }
-
-/* ---------------- PAGE ---------------- */
 
 .page {
   min-height: 100vh;
 }
 
 .header {
-  height: 56px;
-  background: rgb(3, 97, 220);
-  padding: 0 28px;
+  height: 52px;
+  background: var(--card); /* instead of bright blue */
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--border);
 }
 
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+}
+
+
 .title {
   margin: 0;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: white;
-  line-height: 1.2;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
 }
 
 .subtitle {
   margin: 2px 0 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgb(214, 212, 212);
-  letter-spacing: 0.01em;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-light);
 }
 
 .userSection {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
+/* icons */
 .modeButton {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  border: 1px solid transparent;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
   background: transparent;
-  color: white;
+  color: var(--text-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .modeButton:hover {
@@ -86,34 +97,59 @@ body {
   color: var(--text);
 }
 
+/* avatar */
 .userIcon {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: transparent;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-light);
 }
 
+/* username */
 .userName {
-  font-size: 14px;
-  font-weight: 200;
-  color: white;
-  letter-spacing: -0.01em;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
 }
 
+/* logout */
 .logoutButton {
-  height: 34px;
-  padding: 2px 14px;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
   background: transparent;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .logoutButton:hover {
-  border-color: var(--primary);
+  background: var(--button-bg);
+}
+
+
+body,
+.header,
+.page {
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }

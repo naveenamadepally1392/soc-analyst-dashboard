@@ -4,6 +4,7 @@ import CardsPage from "./CardsPage";
 import TimeRangePage from "./TimeRangePage";
 import LogsTable from "./LogsTable";
 import { mockLogs } from "../data/logs";
+import EventsChart from "./EventsChart";
 
 interface Props {
   username: string;
@@ -19,8 +20,16 @@ export default function DashboardPage({ username, onLogout }: Props) {
     >("all");
 
     const [selectedRange, setSelectedRange] = useState<
-    "30m" | "1h" | "6h" | "12h" | "24h"
-    >("30m");
+    "" | "30m" | "1h" | "6h" | "12h" | "24h"
+    >("");
+
+    // Clear time range when status filter is "all"
+    useEffect(() => {
+      if (statusFilter === "all") {
+        setSelectedRange("");
+      }
+    }, [statusFilter]);
+
     const getTimeInMs = (range: string) => {
   switch (range) {
     case "30m": return 30 * 60 * 1000;
@@ -28,16 +37,15 @@ export default function DashboardPage({ username, onLogout }: Props) {
     case "6h": return 6 * 60 * 60 * 1000;
     case "12h": return 12 * 60 * 60 * 1000;
     case "24h": return 24 * 60 * 60 * 1000;
-    default: return 60 * 60 * 1000;
+    default: return Infinity; // No time filter when empty
   }
 };
 const rangeMs = getTimeInMs(selectedRange);
 const filteredLogs = logs.filter((log) => {
-  // STATUS FILTER
+
   if (statusFilter !== "all" && log.status !== statusFilter) return false;
 
-  // TIME FILTER
-  if (log.timestamp) {
+  if (log.timestamp && selectedRange) {
     const logTime = new Date(log.timestamp).getTime();
     if (now - logTime > rangeMs) return false;
   }
@@ -94,6 +102,7 @@ const filteredLogs = logs.filter((log) => {
         onRangeChange={setSelectedRange}
         />
         <CardsPage totals={totals} />
+        <EventsChart logs={filteredLogs} />
       <LogsTable logs={filteredLogs}
   statusFilter={statusFilter}
   setStatusFilter={setStatusFilter} />

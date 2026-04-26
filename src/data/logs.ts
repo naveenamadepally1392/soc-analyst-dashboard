@@ -46,24 +46,44 @@ const statuses: LogStatus[] = ["allowed", "blocked", "anomaly"];
 const getRandomIp = () =>
   `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
 
-const getRandomTimestamp = () => {
-  const now = Date.now();
-  const past = now - 24 * 60 * 60 * 1000; // 24h ago
-  const randomTime = past + Math.random() * (now - past);
-  return new Date(randomTime).toISOString();
-};
+export const generateMockLogs = (_count: number = 50): Log[] => {
+  const buckets = [
+    30 * 60 * 1000,        // last 30 min
+    60 * 60 * 1000,        // 30m–1h
+    6 * 60 * 60 * 1000,    // 1h–6h
+    12 * 60 * 60 * 1000,   // 6h–12h
+    24 * 60 * 60 * 1000,   // 12h–24h
+  ];
 
-export const generateMockLogs = (count: number = 50): Log[] => {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i + 1,
-    service: services[Math.floor(Math.random() * services.length)],
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    message: messages[Math.floor(Math.random() * messages.length)],
-    timestamp: getRandomTimestamp(),
-    sourceIp: getRandomIp(),
-    destinationIp: getRandomIp(),
-    userId: Math.random() > 0.2 ? `user_${String(i + 1).padStart(3, "0")}` : "system",
-  }));
+  const now = Date.now();
+  const logs: Log[] = [];
+
+  let id = 1;
+
+  buckets.forEach((maxRange, index) => {
+    const minRange = index === 0 ? 0 : buckets[index - 1];
+
+    for (let i = 0; i < 10; i++) {
+      const randomTime =
+        now - (minRange + Math.random() * (maxRange - minRange));
+
+      logs.push({
+        id: id++,
+        service: services[Math.floor(Math.random() * services.length)],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        message: messages[Math.floor(Math.random() * messages.length)],
+        timestamp: new Date(randomTime).toISOString(),
+        sourceIp: getRandomIp(),
+        destinationIp: getRandomIp(),
+        userId:
+          Math.random() > 0.2
+            ? `user_${String(id).padStart(3, "0")}`
+            : "system",
+      });
+    }
+  });
+
+  return logs;
 };
 
 export const mockLogs: Log[] = generateMockLogs(50);

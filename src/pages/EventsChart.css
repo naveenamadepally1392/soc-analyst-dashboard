@@ -1,0 +1,69 @@
+/* Container for all charts */
+.chart-container {
+  height: 300px;
+  margin-top: 20px;
+  background: var(--card-bg, #ffffff);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Optional: title above chart */
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-primary, #1f2937);
+}
+
+/* Grid lines (subtle look) */
+.recharts-cartesian-grid line {
+  stroke: #e5e7eb;
+  stroke-dasharray: 3 3;
+}
+
+/* Axis text */
+.recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  fill: #6b7280;
+}
+
+/* Tooltip styling */
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.recharts-default-tooltip {
+  background-color: #111827 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  padding: 8px !important;
+}
+
+/* Scatter dots hover effect */
+.recharts-scatter-symbol {
+  transition: transform 0.15s ease;
+}
+
+.recharts-scatter-symbol:hover {
+  transform: scale(1.4);
+}
+
+/* Optional legend styling (if you add later) */
+.recharts-legend-item-text {
+  font-size: 12px;
+  color: #374151 !important;
+}
+
+.custom-tooltip {
+  pointer-events: none;
+  background: #111827;
+  color: #ffffff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}

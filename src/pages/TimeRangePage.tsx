@@ -1,6 +1,6 @@
 import "./TimeRangePage.css";
 
-type TimeRange = "30m" | "1h" | "6h" | "12h" | "24h";
+type TimeRange = "" | "30m" | "1h" | "6h" | "12h" | "24h";
 
 interface Props {
   selectedRange: TimeRange;
@@ -8,6 +8,7 @@ interface Props {
 }
 
 const ranges: { label: string; value: TimeRange }[] = [
+  { label: "All", value: "" },
   { label: "30 min", value: "30m" },
   { label: "1 hr", value: "1h" },
   { label: "6 hr", value: "6h" },

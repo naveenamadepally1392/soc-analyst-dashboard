@@ -43,14 +43,23 @@
 }
 
 /* ONLY when drawer is open */
+.logs-container.with-drawer {
+  height: calc(100vh - 270px); /* header + cards + toolbar approx */
+  min-height: 320px;
+}
+
 .logs-container.with-drawer .table-section {
+  flex: 1 1 0;
+  min-height: 0;
   overflow-y: auto;
+  max-height: 100%;
 }
 
 /* TABLE STYLES */
 .logs-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .logs-table th {
@@ -63,6 +72,14 @@
   background: var(--button-bg);
   position: sticky;
   top: 0;
+  text-align: left;
+}
+
+
+.logs-table th,
+.logs-table td {
+  width: 1%;
+  /* Let flexbox/table-layout:fixed handle equal distribution */
 }
 
 .logs-table td {
@@ -70,6 +87,9 @@
   font-size: 13px;
   border-bottom: 1px solid var(--border);
   color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* rows */
@@ -165,4 +185,34 @@
     border-left: none;
     border-top: 1px solid var(--border);
   }
+}
+.table-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+
+.table-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.status-filter {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.status-filter:focus {
+  outline: none;
+  border-color: var(--primary);
 }

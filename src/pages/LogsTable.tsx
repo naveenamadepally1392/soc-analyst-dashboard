@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./LogsTable.css";
 
 type LogStatus = "allowed" | "blocked" | "anomaly";
-
 type Log = {
   id: number;
   service: string;
@@ -14,20 +13,46 @@ type Log = {
   userId?: string;
 };
 
+type StatusFilter = "all" | "allowed" | "blocked" | "anomaly";
+
 type Props = {
   logs: Log[];
+  statusFilter: StatusFilter;
+  setStatusFilter: (val: StatusFilter) => void;
 };
 
-export default function LogsTable({ logs }: Props) {
+export default function LogsTable({ logs, statusFilter, setStatusFilter }: Props) {
   const [selectedLog, setSelectedLog] = useState<Log | null>(null);
 
+  const filteredLogs =
+    statusFilter === "all"
+      ? logs
+      : logs.filter((log) => log.status === statusFilter);
+
   return (
-    <div className="logs-container">
-      {/* TABLE */}
+    <div className={`logs-container ${selectedLog ? "with-drawer" : ""}`}>
       <div className="table-section">
+        <div className="table-toolbar">
+          <span className="table-title">Filter logs by status</span>
+          <select
+            className="status-filter"
+            value={statusFilter}
+            onChange={(e) => {
+              setStatusFilter(e.target.value as StatusFilter);
+              setSelectedLog(null);
+            }}
+          >
+            <option value="all">All Statuses</option>
+            <option value="allowed">Allowed</option>
+            <option value="blocked">Blocked</option>
+            <option value="anomaly">Anomaly</option>
+          </select>
+        </div>
+
         <table className="logs-table">
           <thead>
             <tr>
+              <th>Time</th>
               <th>Service</th>
               <th>Message</th>
               <th>Status</th>
@@ -35,12 +60,13 @@ export default function LogsTable({ logs }: Props) {
           </thead>
 
           <tbody>
-            {logs.map((log) => (
+            {filteredLogs.map((log) => (
               <tr
                 key={log.id}
                 onClick={() => setSelectedLog(log)}
                 className={selectedLog?.id === log.id ? "selected-row" : ""}
               >
+                <td>{log.timestamp}</td>
                 <td>{log.service}</td>
                 <td>{log.message}</td>
                 <td>
@@ -54,7 +80,6 @@ export default function LogsTable({ logs }: Props) {
         </table>
       </div>
 
-      {/* DRAWER */}
       {selectedLog && (
         <div className="drawer-panel">
           <div className="drawer-header">

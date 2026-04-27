@@ -131,7 +131,7 @@ export default function EventsChart({ logs }: { logs: Log[] }) {
                 <circle
                   cx={cx}
                   cy={cy}
-                  r={5}  // fixed size (no jump)
+                  r={5}
                   fill={getColor(payload.label)}
                 />
               );

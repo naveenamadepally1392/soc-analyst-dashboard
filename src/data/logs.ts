@@ -9,6 +9,7 @@ export type Log = {
   sourceIp: string;
   destinationIp: string;
   userId: string;
+  formattedTimestamp?: string;
 };
 
 const services = [

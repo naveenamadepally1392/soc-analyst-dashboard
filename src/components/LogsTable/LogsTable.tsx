@@ -11,6 +11,7 @@ type Log = {
   sourceIp?: string;
   destinationIp?: string;
   userId?: string;
+  formattedTimestamp?: string;
 };
 
 type StatusFilter = "all" | "allowed" | "blocked" | "anomaly";
@@ -66,7 +67,7 @@ export default function LogsTable({ logs, statusFilter, setStatusFilter }: Props
                 onClick={() => setSelectedLog(log)}
                 className={selectedLog?.id === log.id ? "selected-row" : ""}
               >
-                <td>{log.timestamp}</td>
+                <td>{log.formattedTimestamp || log.timestamp}</td>
                 <td>{log.service}</td>
                 <td>{log.message}</td>
                 <td>

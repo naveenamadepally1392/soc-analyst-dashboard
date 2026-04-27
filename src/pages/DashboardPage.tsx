@@ -11,6 +11,18 @@ interface Props {
   onLogout: () => void;
 }
 
+const formatTimestamp = (timestamp?: string) => {
+  if (!timestamp) return "N/A";
+  const date = new Date(timestamp);
+  return date.toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+};
+
 export default function DashboardPage({ username, onLogout }: Props) {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     const saved = localStorage.getItem("theme");
@@ -46,17 +58,23 @@ export default function DashboardPage({ username, onLogout }: Props) {
   }
 };
 const rangeMs = getTimeInMs(selectedRange);
-const filteredLogs = logs.filter((log) => {
+const filteredLogs = logs
+  .filter((log) => {
+    if (statusFilter !== "all" && log.status !== statusFilter) return false;
 
-  if (statusFilter !== "all" && log.status !== statusFilter) return false;
+    if (log.timestamp && selectedRange) {
+      const logTime = new Date(log.timestamp).getTime();
+      if (now - logTime > rangeMs) return false;
+    }
 
-  if (log.timestamp && selectedRange) {
-    const logTime = new Date(log.timestamp).getTime();
-    if (now - logTime > rangeMs) return false;
-  }
-
-  return true;
-});
+    return true;
+  })
+  .map((log) => ({ ...log, formattedTimestamp: formatTimestamp(log.timestamp) }))
+  .sort((a, b) => {
+    const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+    const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+    return timeB - timeA; // descending order
+  });
     const totals = {
     total: filteredLogs.length,
     allowed: filteredLogs.filter(l => l.status === "allowed").length,

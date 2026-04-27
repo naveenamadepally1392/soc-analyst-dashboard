@@ -6,6 +6,11 @@
   border-radius: 10px;
   padding: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s;
+}
+
+[data-theme="dark"] .chart-container {
+  background: var(--card, #181c23);
 }
 
 /* Optional: title above chart */
@@ -21,11 +26,17 @@
   stroke: #e5e7eb;
   stroke-dasharray: 3 3;
 }
+[data-theme="dark"] .recharts-cartesian-grid line {
+  stroke: var(--border, #23272f);
+}
 
 /* Axis text */
 .recharts-cartesian-axis-tick-value {
   font-size: 12px;
   fill: #6b7280;
+}
+[data-theme="dark"] .recharts-cartesian-axis-tick-value {
+  fill: #a1a1aa;
 }
 
 /* Tooltip styling */
@@ -40,6 +51,10 @@
   color: #ffffff !important;
   font-size: 12px !important;
   padding: 8px !important;
+}
+[data-theme="dark"] .recharts-default-tooltip {
+  background-color: #23272f !important;
+  color: #f3f4f6 !important;
 }
 
 /* Scatter dots hover effect */
@@ -66,4 +81,8 @@
   font-size: 12px;
   line-height: 1.4;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+[data-theme="dark"] .custom-tooltip {
+  background: #23272f;
+  color: #f3f4f6;
 }

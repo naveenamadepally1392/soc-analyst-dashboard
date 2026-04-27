@@ -6,7 +6,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
-  ReferenceLine,
 } from "recharts";
 import "./EventsChart.css";
 
@@ -88,7 +87,6 @@ export default function EventsChart({ logs }: { logs: Log[] }) {
             }
           />
 
-          <ReferenceLine y={1.5} strokeDasharray="3 3" />
 
           <Tooltip
             content={<CustomTooltip />}

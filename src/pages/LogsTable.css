@@ -133,36 +133,61 @@
 }
 
 /* DRAWER */
+
 .drawer-panel {
-  width: 300px;
-  border-left: 1px solid var(--border);
+  width: 340px;
+  border-left: 1.5px solid var(--border);
   background: var(--card);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  box-shadow: -2px 0 16px 0 rgba(0,0,0,0.04);
+  padding-top: 8px;
+  animation: slideInDrawer 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes slideInDrawer {
+  from { transform: translateX(60px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 .drawer-header {
-  padding: 14px;
+  padding: 18px 18px 10px 18px;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .drawer-content {
-  padding: 14px;
+  padding: 18px;
   overflow-y: auto;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
+
+.drawer-field {
+  margin-bottom: 8px;
+}
 .drawer-field label {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--text-light);
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  display: block;
 }
-
 .drawer-field span {
-  font-size: 13px;
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 500;
 }
 
 .logs-container {

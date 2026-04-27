@@ -52,28 +52,6 @@ https://soc-analyst-dashboard.vercel.app/
 
 ## Project Structure
 
-```
-src/
-├── components/
-│   ├── Cards/          # Summary cards component
-│   ├── EventsChart/    # Scatter plot visualization
-│   ├── LogsTable/      # Logs table with filtering and drawer
-│   └── TimeRange/      # Time range filter buttons
-├── data/
-│   └── logs.ts         # Mock log data
-├── pages/
-│   ├── DashboardPage.tsx   # Main dashboard
-│   └── Login.tsx           # Login page
-├── App.tsx
-└── main.tsx
-```
-
-## Demo Login
-
-This project uses a mock login flow. Enter any non-empty username and password to continue to the dashboard.
-
-## Project Structure
-
 ```text
 src/
   App.tsx                    # Login/dashboard shell state
@@ -87,6 +65,10 @@ src/
     DashboardPage.tsx        # Main dashboard state and filtering
     Login.tsx                # Mock login screen
 ```
+
+## Demo Login
+
+This project uses a mock login flow. Enter any non-empty username and password to continue to the dashboard.
 
 ## Implementation Notes
 

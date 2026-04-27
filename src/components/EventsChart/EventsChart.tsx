@@ -18,13 +18,36 @@ type Log = {
   message?: string;
 };
 
+type ChartPoint = {
+  time: number;
+  status: number;
+  label: LogStatus;
+  service?: string;
+  message?: string;
+};
+
+type TooltipPayload = {
+  payload: ChartPoint;
+};
+
+type TooltipProps = {
+  active?: boolean;
+  payload?: TooltipPayload[];
+};
+
+type ScatterPointProps = {
+  cx?: number;
+  cy?: number;
+  payload?: ChartPoint;
+};
+
 const getColor = (status: LogStatus) => {
   if (status === "allowed") return "#22c55e";
   if (status === "blocked") return "#ef4444";
   return "#f59e0b";
 };
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload }: TooltipProps) => {
   if (!active || !payload?.length) return null;
 
   const data = payload[0].payload;
@@ -42,7 +65,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 export default function EventsChart({ logs }: { logs: Log[] }) {
-  const mapped = logs.map((log) => {
+  const mapped: ChartPoint[] = logs.map((log) => {
     const date = new Date(log.timestamp);
 
     return {
@@ -98,8 +121,11 @@ export default function EventsChart({ logs }: { logs: Log[] }) {
             data={mapped}
             isAnimationActive={false}
             activeShape={false}   // 👈 prevents hover replacement
-            shape={(props: any) => {
+            shape={(props: ScatterPointProps) => {
               const { cx, cy, payload } = props;
+              if (cx === undefined || cy === undefined || !payload) {
+                return null;
+              }
 
               return (
                 <circle

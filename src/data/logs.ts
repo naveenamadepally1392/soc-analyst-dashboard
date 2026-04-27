@@ -46,7 +46,7 @@ const statuses: LogStatus[] = ["allowed", "blocked", "anomaly"];
 const getRandomIp = () =>
   `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
 
-export const generateMockLogs = (_count: number = 50): Log[] => {
+export const generateMockLogs = (count: number = 50): Log[] => {
   const buckets = [
     30 * 60 * 1000,        // last 30 min
     60 * 60 * 1000,        // 30m–1h
@@ -60,10 +60,12 @@ export const generateMockLogs = (_count: number = 50): Log[] => {
 
   let id = 1;
 
+  const logsPerBucket = Math.ceil(count / buckets.length);
+
   buckets.forEach((maxRange, index) => {
     const minRange = index === 0 ? 0 : buckets[index - 1];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < logsPerBucket && logs.length < count; i++) {
       const randomTime =
         now - (minRange + Math.random() * (maxRange - minRange));
 
@@ -87,4 +89,3 @@ export const generateMockLogs = (_count: number = 50): Log[] => {
 };
 
 export const mockLogs: Log[] = generateMockLogs(50);
-

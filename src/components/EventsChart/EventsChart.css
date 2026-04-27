@@ -58,31 +58,3 @@
 }
 
 /* Scatter dots hover effect */
-.recharts-scatter-symbol {
-  transition: transform 0.15s ease;
-}
-
-.recharts-scatter-symbol:hover {
-  transform: scale(1.4);
-}
-
-/* Optional legend styling (if you add later) */
-.recharts-legend-item-text {
-  font-size: 12px;
-  color: #374151 !important;
-}
-
-.custom-tooltip {
-  pointer-events: none;
-  background: #111827;
-  color: #ffffff;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  line-height: 1.4;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-[data-theme="dark"] .custom-tooltip {
-  background: #23272f;
-  color: #f3f4f6;
-}

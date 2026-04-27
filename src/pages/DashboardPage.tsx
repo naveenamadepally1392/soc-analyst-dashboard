@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { FiMoon, FiSun, FiUser, FiLogOut } from "react-icons/fi";
-import CardsPage from "./CardsPage";
-import TimeRangePage from "./TimeRangePage";
-import LogsTable from "./LogsTable";
+import CardsPage from "../components/Cards/CardsPage";
+import TimeRangePage from "../components/TimeRange/TimeRangePage";
+import LogsTable from "../components/LogsTable/LogsTable";
 import { mockLogs } from "../data/logs";
-import EventsChart from "./EventsChart";
+import EventsChart from "../components/EventsChart/EventsChart";
 
 interface Props {
   username: string;
@@ -12,9 +12,12 @@ interface Props {
 }
 
 export default function DashboardPage({ username, onLogout }: Props) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const saved = localStorage.getItem("theme");
+    return saved === "dark" || saved === "light" ? saved : "light";
+  });
   const [logs] = useState(mockLogs);
-  const now = Date.now();
+  const [now] = useState(() => Date.now());
   const [statusFilter, setStatusFilter] = useState<
     "all" | "allowed" | "blocked" | "anomaly"
     >("all");
@@ -23,12 +26,14 @@ export default function DashboardPage({ username, onLogout }: Props) {
     "" | "30m" | "1h" | "6h" | "12h" | "24h"
     >("");
 
-    // Clear time range when status filter is "all"
-    useEffect(() => {
-      if (statusFilter === "all") {
+    const handleStatusFilterChange = (
+      nextStatus: "all" | "allowed" | "blocked" | "anomaly"
+    ) => {
+      setStatusFilter(nextStatus);
+      if (nextStatus === "all") {
         setSelectedRange("");
       }
-    }, [statusFilter]);
+    };
 
     const getTimeInMs = (range: string) => {
   switch (range) {
@@ -58,11 +63,6 @@ const filteredLogs = logs.filter((log) => {
     blocked: filteredLogs.filter(l => l.status === "blocked").length,
     anomaly: filteredLogs.filter(l => l.status === "anomaly").length,
     };
-
-  useEffect(() => {
-    const saved = localStorage.getItem("theme") as "light" | "dark";
-    if (saved) setTheme(saved);
-  }, []);
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
@@ -105,7 +105,7 @@ const filteredLogs = logs.filter((log) => {
         <EventsChart logs={filteredLogs} />
       <LogsTable logs={filteredLogs}
   statusFilter={statusFilter}
-  setStatusFilter={setStatusFilter} />
+  setStatusFilter={handleStatusFilterChange} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiMoon, FiSun, FiUser, FiLogOut } from "react-icons/fi";
 import CardsPage from "../components/Cards/CardsPage";
 import TimeRangePage from "../components/TimeRange/TimeRangePage";
@@ -75,7 +75,10 @@ const filteredLogs = logs
     blocked: filteredLogs.filter(l => l.status === "blocked").length,
     anomaly: filteredLogs.filter(l => l.status === "anomaly").length,
     };
-
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
     <div className="page">

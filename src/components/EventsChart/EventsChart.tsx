@@ -8,6 +8,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import "./EventsChart.css";
+import { formatChartTick, formatTimestamp } from "../../utils/formatTimestamp";
 
 type LogStatus = "allowed" | "blocked" | "anomaly";
 
@@ -16,6 +17,7 @@ type Log = {
   status: LogStatus;
   service?: string;
   message?: string;
+  formattedTimestamp?: string;
 };
 
 type ChartPoint = {
@@ -24,6 +26,7 @@ type ChartPoint = {
   label: LogStatus;
   service?: string;
   message?: string;
+  displayTime: string;
 };
 
 type TooltipPayload = {
@@ -56,7 +59,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps) => {
     <div className="custom-tooltip">
       <div><strong>{data.service}</strong></div>
       <div>{data.message}</div>
-      <div>{new Date(data.time).toLocaleString()}</div>
+      <div>{data.displayTime}</div>
       <div style={{ textTransform: "capitalize" }}>
         Status: {data.label}
       </div>
@@ -79,6 +82,7 @@ export default function EventsChart({ logs }: { logs: Log[] }) {
       label: log.status,
       service: log.service,
       message: log.message,
+      displayTime: log.formattedTimestamp || formatTimestamp(log.timestamp),
     };
   });
 
@@ -94,12 +98,7 @@ export default function EventsChart({ logs }: { logs: Log[] }) {
             dataKey="time"
             type="number"
             domain={["auto", "auto"]}
-            tickFormatter={(time) =>
-              new Date(time).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            }
+            tickFormatter={formatChartTick}
           />
 
           <YAxis
@@ -120,7 +119,7 @@ export default function EventsChart({ logs }: { logs: Log[] }) {
           <Scatter
             data={mapped}
             isAnimationActive={false}
-            activeShape={false}   // 👈 prevents hover replacement
+            activeShape={false}
             shape={(props: ScatterPointProps) => {
               const { cx, cy, payload } = props;
               if (cx === undefined || cy === undefined || !payload) {

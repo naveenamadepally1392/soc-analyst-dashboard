@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function LoginPage({ onLogin }: Props) {
-  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -18,11 +17,7 @@ export default function LoginPage({ onLogin }: Props) {
     }
 
     setError("");
-    setLoading(true);
-
-    setTimeout(() => {
-      onLogin(username.trim());
-    }, 800);
+    onLogin(username);
   };
 
   return (
@@ -52,10 +47,8 @@ export default function LoginPage({ onLogin }: Props) {
 
         <button
           className="login-button"
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? "Signing in..." : "Sign In"}
+          onClick={handleLogin}>
+            Login
         </button>
       </div>
     </div>

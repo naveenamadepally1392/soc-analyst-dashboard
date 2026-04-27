@@ -1,44 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiMoon, FiSun, FiUser, FiLogOut } from "react-icons/fi";
 import CardsPage from "../components/Cards/CardsPage";
 import TimeRangePage from "../components/TimeRange/TimeRangePage";
 import LogsTable from "../components/LogsTable/LogsTable";
 import { mockLogs } from "../data/logs";
 import EventsChart from "../components/EventsChart/EventsChart";
+import { formatTimestamp } from "../utils/formatTimestamp";
 
 interface Props {
   username: string;
   onLogout: () => void;
 }
 
-const formatTimestamp = (timestamp?: string) => {
-  if (!timestamp) return "N/A";
-  const date = new Date(timestamp);
-  return date.toLocaleString(undefined, {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-};
-
 export default function DashboardPage({ username, onLogout }: Props) {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     const saved = localStorage.getItem("theme");
     return saved === "dark" || saved === "light" ? saved : "light";
   });
+
   const [logs] = useState(mockLogs);
   const [now] = useState(() => Date.now());
+
   const [statusFilter, setStatusFilter] = useState<
     "all" | "allowed" | "blocked" | "anomaly"
     >("all");
 
-    const [selectedRange, setSelectedRange] = useState<
+  const [selectedRange, setSelectedRange] = useState<
     "" | "30m" | "1h" | "6h" | "12h" | "24h"
     >("");
 
-    const handleStatusFilterChange = (
+  const handleStatusFilterChange = (
       nextStatus: "all" | "allowed" | "blocked" | "anomaly"
     ) => {
       setStatusFilter(nextStatus);
@@ -47,8 +38,8 @@ export default function DashboardPage({ username, onLogout }: Props) {
       }
     };
 
-    const getTimeInMs = (range: string) => {
-  switch (range) {
+  const getTimeInMs = (range: string) => {
+   switch (range) {
     case "30m": return 30 * 60 * 1000;
     case "1h": return 60 * 60 * 1000;
     case "6h": return 6 * 60 * 60 * 1000;
@@ -57,7 +48,9 @@ export default function DashboardPage({ username, onLogout }: Props) {
     default: return Infinity; // No time filter when empty
   }
 };
+
 const rangeMs = getTimeInMs(selectedRange);
+
 const filteredLogs = logs
   .filter((log) => {
     if (statusFilter !== "all" && log.status !== statusFilter) return false;
@@ -75,17 +68,14 @@ const filteredLogs = logs
     const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
     return timeB - timeA; // descending order
   });
-    const totals = {
+
+ const totals = {
     total: filteredLogs.length,
     allowed: filteredLogs.filter(l => l.status === "allowed").length,
     blocked: filteredLogs.filter(l => l.status === "blocked").length,
     anomaly: filteredLogs.filter(l => l.status === "anomaly").length,
     };
 
-  useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   return (
     <div className="page">

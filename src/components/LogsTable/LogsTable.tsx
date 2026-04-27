@@ -93,7 +93,7 @@ export default function LogsTable({ logs, statusFilter, setStatusFilter }: Props
             <Detail label="Service" value={selectedLog.service} />
             <Detail label="Message" value={selectedLog.message} />
             <Detail label="Status" value={selectedLog.status.toUpperCase()} status={selectedLog.status} />
-            <Detail label="Timestamp" value={selectedLog.timestamp || "N/A"} />
+            <Detail label="Timestamp" value={selectedLog.formattedTimestamp || "N/A"} />
             <Detail label="Source IP" value={selectedLog.sourceIp || "N/A"} />
             <Detail label="Destination IP" value={selectedLog.destinationIp || "N/A"} />
             <Detail label="User ID" value={selectedLog.userId || "N/A"} />
